@@ -6,7 +6,7 @@ class PostTest < ActiveSupport::TestCase
   # end
 
   test 'validなpost' do
-    post = Post.new(title: 'title')
+    post = Post.new(title: 'title', body: 'body')
 
     assert post.valid?
     assert_difference("Post.count", 1) do
@@ -19,5 +19,12 @@ class PostTest < ActiveSupport::TestCase
 
     assert post.invalid?
     assert post.errors.details[:title].present?
+  end
+
+  test 'body は必須' do
+    post = Post.new(body: '')
+
+    assert post.invalid?
+    assert post.errors.details[:body].present?
   end
 end
